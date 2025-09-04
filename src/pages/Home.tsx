@@ -1,25 +1,34 @@
-import { useState } from "react";
-import Header from "@/components/Header";
-import SearchSection from "@/components/SearchSection";
-import Dashboard from "@/components/Dashboard";
+import React, { useState } from "react";
+import SearchBar from "../components/SearchBar";
 
 const Home = () => {
-  const [language, setLanguage] = useState<"en" | "hi">("en");
+  const [results, setResults] = useState<any[]>([]);
 
-  const handleSearch = (query: string) => {
-    // For demo purposes, we'll just show an alert
-    // In a real app, this would navigate to results or update state
-    console.log("Searching for:", query);
+  const performSearch = async (query: string) => {
+    try {
+      const res = await fetch(`https://api.example.com/search?q=${query}`);
+      const data = await res.json();
+      setResults(data.results || []);
+    } catch (err) {
+      console.error(err);
+      alert("Error fetching data.");
+    }
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      <Header language={language} onLanguageChange={setLanguage} />
-      
-      <main>
-        <SearchSection language={language} onSearch={handleSearch} />
-        <Dashboard language={language} />
-      </main>
+    <div className="p-4">
+      <SearchBar onSearch={performSearch} />
+      <div className="mt-4">
+        {results.length === 0 ? (
+          <p>No results found</p>
+        ) : (
+          results.map((item, index) => (
+            <div key={index} className="border p-2 my-2 rounded">
+              {item.name} - {item.mobile} - {item.website}
+            </div>
+          ))
+        )}
+      </div>
     </div>
   );
 };
