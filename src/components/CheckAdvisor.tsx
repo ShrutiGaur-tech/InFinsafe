@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Search, User, Phone, MapPin, AlertTriangle, CheckCircle, XCircle } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 
 interface CheckAdvisorProps {
   language: "en" | "hi";
@@ -13,6 +14,7 @@ const CheckAdvisor = ({ language }: CheckAdvisorProps) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [results, setResults] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const { toast } = useToast();
 
   const text = {
     en: {
@@ -45,34 +47,57 @@ const CheckAdvisor = ({ language }: CheckAdvisorProps) => {
     }
   };
 
-  // Mock data for demo
+  // Actual data
+  const advisorDatabase = [
+    {
+      name: "John Doe",
+      reg_number: "AD12345",
+      verified: false,
+      description: "Guaranteed returns monthly!"
+    },
+    {
+      name: "Jane Smith",
+      reg_number: "AD67890", 
+      verified: true,
+      description: "Registered SEBI advisor with transparent records."
+    }
+  ];
+
+  const scamKeywords = {
+    high_risk: [
+      "guaranteed returns",
+      "no risk",
+      "get rich quick"
+    ],
+    medium_risk: [
+      "premium membership",
+      "hidden strategy"
+    ],
+    safe_words: [
+      "registered",
+      "SEBI",
+      "transparent"
+    ]
+  };
+
   const mockResults = {
-    "John Smith": {
-      name: "John Smith",
+    "John Doe": {
+      name: "John Doe",
       phone: "+91-9876543210",
       location: "Mumbai, Maharashtra",
-      fraudScore: 85, // Safe: 80-100, Medium: 40-79, High: 0-39
+      fraudScore: 25, // Based on new scoring
+      suspiciousKeywords: ["guaranteed returns"],
+      verified: false,
+      lastChecked: "Just now"
+    },
+    "Jane Smith": {
+      name: "Jane Smith", 
+      phone: "+91-8765432109",
+      location: "Delhi",
+      fraudScore: 85,
       suspiciousKeywords: [],
       verified: true,
-      lastChecked: "2 hours ago"
-    },
-    "राज कुमार": {
-      name: "राज कुमार", 
-      phone: "+91-8765432109",
-      location: "नई दिल्ली",
-      fraudScore: 25,
-      suspiciousKeywords: ["guaranteed returns", "quick money", "no risk"],
-      verified: false,
-      lastChecked: "1 day ago"
-    },
-    "Sarah Johnson": {
-      name: "Sarah Johnson",
-      phone: "+91-7654321098", 
-      location: "Bangalore, Karnataka",
-      fraudScore: 55,
-      suspiciousKeywords: ["instant profit"],
-      verified: true,
-      lastChecked: "5 hours ago"
+      lastChecked: "Just now"
     }
   };
 
@@ -87,7 +112,39 @@ const CheckAdvisor = ({ language }: CheckAdvisorProps) => {
       const result = mockResults[searchQuery as keyof typeof mockResults];
       setResults(result || null);
       setIsLoading(false);
+      
+      // Show gamification toast if result found
+      if (result) {
+        showGamificationToast();
+      }
     }, 1500);
+  };
+
+  const showGamificationToast = () => {
+    // Simulate points earned and badge unlock
+    const pointsEarned = 10;
+    const currentPoints = 10; // This would come from user state
+    
+    toast({
+      title: language === "en" ? "🎉 Points Earned!" : "🎉 अंक अर्जित!",
+      description: language === "en" 
+        ? `You earned ${pointsEarned} points! Total: ${currentPoints}`
+        : `आपने ${pointsEarned} अंक अर्जित किए! कुल: ${currentPoints}`,
+      duration: 3000,
+    });
+
+    // Check for badge unlock (simplified)
+    if (currentPoints >= 1) {
+      setTimeout(() => {
+        toast({
+          title: language === "en" ? "🏅 New Badge Unlocked!" : "🏅 नया बैज अनलॉक!",
+          description: language === "en" 
+            ? "🕵️ Smart Starter badge unlocked!"
+            : "🕵️ स्मार्ट स्टार्टर बैज अनलॉक!",
+          duration: 4000,
+        });
+      }, 1500);
+    }
   };
 
   const getScoreColor = (score: number) => {
@@ -207,8 +264,8 @@ const CheckAdvisor = ({ language }: CheckAdvisorProps) => {
       <Card className="p-4 bg-muted/50">
         <p className="text-sm text-muted-foreground text-center">
           {language === "en" 
-            ? "Demo: Try searching 'John Smith', 'राज कुमार', or 'Sarah Johnson'"
-            : "डेमो: 'John Smith', 'राज कुमार', या 'Sarah Johnson' खोजने का प्रयास करें"
+            ? "Demo: Try searching 'John Doe' or 'Jane Smith'"
+            : "डेमो: 'John Doe' या 'Jane Smith' खोजने का प्रयास करें"
           }
         </p>
       </Card>

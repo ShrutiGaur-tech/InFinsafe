@@ -8,63 +8,55 @@ interface AchievementsProps {
 }
 
 const Achievements = ({ language }: AchievementsProps) => {
-  // Mock user data
+  // User data based on actual structure
   const userStats = {
-    totalPoints: 850,
-    checksCompleted: 42,
-    fraudsPrevented: 3,
-    level: 5,
-    nextLevelPoints: 1000
+    totalPoints: 35,
+    checksCompleted: 8,
+    fraudsPrevented: 2,
+    level: 2,
+    nextLevelPoints: 50
   };
 
   const badges = [
     {
       id: "smart_starter",
-      emoji: "🕵️",
       name: language === "en" ? "Smart Starter" : "स्मार्ट शुरुआत",
+      icon: "🕵️",
+      threshold: 1,
       description: language === "en" ? "Completed first fraud check" : "पहली धोखाधड़ी जांच पूरी की",
-      unlocked: true,
-      points: 50
+      unlocked: true
     },
     {
       id: "alert_investor", 
-      emoji: "🛡️",
       name: language === "en" ? "Alert Investor" : "सतर्क निवेशक",
-      description: language === "en" ? "Detected a fraudulent advisor" : "एक धोखेबाज़ सलाहकार का पता लगाया",
-      unlocked: true,
-      points: 200
+      icon: "🛡️",
+      threshold: 10,
+      description: language === "en" ? "Earned 10 points" : "10 अंक अर्जित किए",
+      unlocked: true
     },
     {
       id: "fraud_buster",
-      emoji: "🔍", 
       name: language === "en" ? "Fraud Buster" : "धोखाधड़ी बस्टर",
-      description: language === "en" ? "Completed 25 security checks" : "25 सुरक्षा जांच पूरी की",
-      unlocked: true,
-      points: 300
+      icon: "🔍", 
+      threshold: 25,
+      description: language === "en" ? "Earned 25 points" : "25 अंक अर्जित किए",
+      unlocked: true
     },
     {
-      id: "security_champion",
-      emoji: "🏆",
-      name: language === "en" ? "Security Champion" : "सुरक्षा चैंपियन", 
-      description: language === "en" ? "Helped protect 5 people from fraud" : "5 लोगों को धोखाधड़ी से बचाने में मदद की",
-      unlocked: false,
-      points: 500
+      id: "market_guardian",
+      name: language === "en" ? "Market Guardian" : "मार्केट गार्डियन",
+      icon: "🏅",
+      threshold: 50,
+      description: language === "en" ? "Earned 50 points" : "50 अंक अर्जित किए",
+      unlocked: false
     },
     {
-      id: "guardian_angel",
-      emoji: "👼",
-      name: language === "en" ? "Guardian Angel" : "संरक्षक देवदूत",
-      description: language === "en" ? "Prevented frauds worth ₹1,00,000+" : "₹1,00,000+ की धोखाधड़ी रोकी",
-      unlocked: false,
-      points: 1000
-    },
-    {
-      id: "fraud_detective",
-      emoji: "🕵️‍♀️",
-      name: language === "en" ? "Fraud Detective" : "धोखाधड़ी जासूस", 
-      description: language === "en" ? "Found 10 suspicious websites" : "10 संदिग्ध वेबसाइटें मिलीं",
-      unlocked: false,
-      points: 750
+      id: "safe_citizen",
+      name: language === "en" ? "Safe Citizen" : "सुरक्षित नागरिक",
+      icon: "🌍",
+      threshold: 100,
+      description: language === "en" ? "Earned 100 points" : "100 अंक अर्जित किए",
+      unlocked: false
     }
   ];
 
@@ -162,11 +154,11 @@ const Achievements = ({ language }: AchievementsProps) => {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {unlockedBadges.map((badge) => (
             <Card key={badge.id} className="p-4 text-center shadow-card bg-gradient-to-br from-accent/10 to-accent/5 border-accent/20">
-              <div className="text-4xl mb-2">{badge.emoji}</div>
+              <div className="text-4xl mb-2">{badge.icon}</div>
               <h5 className="font-semibold text-foreground">{badge.name}</h5>
               <p className="text-sm text-muted-foreground mb-2">{badge.description}</p>
               <Badge variant="secondary" className="text-xs">
-                +{badge.points} {language === "en" ? "points" : "अंक"}
+                {badge.threshold} {language === "en" ? "points" : "अंक"}
               </Badge>
             </Card>
           ))}
@@ -182,12 +174,21 @@ const Achievements = ({ language }: AchievementsProps) => {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {lockedBadges.map((badge) => (
             <Card key={badge.id} className="p-4 text-center opacity-60 border-dashed">
-              <div className="text-4xl mb-2 grayscale">{badge.emoji}</div>
+              <div className="text-4xl mb-2 grayscale">{badge.icon}</div>
               <h5 className="font-semibold text-muted-foreground">{badge.name}</h5>
               <p className="text-sm text-muted-foreground mb-2">{badge.description}</p>
               <Badge variant="outline" className="text-xs">
-                +{badge.points} {language === "en" ? "points" : "अंक"}
+                {badge.threshold} {language === "en" ? "points needed" : "अंक चाहिए"}
               </Badge>
+              <div className="mt-2 w-full bg-muted rounded-full h-2">
+                <div 
+                  className="bg-accent h-2 rounded-full transition-all duration-300" 
+                  style={{ width: `${Math.min(100, (userStats.totalPoints / badge.threshold) * 100)}%` }}
+                ></div>
+              </div>
+              <p className="text-xs text-muted-foreground mt-1">
+                {userStats.totalPoints}/{badge.threshold}
+              </p>
             </Card>
           ))}
         </div>

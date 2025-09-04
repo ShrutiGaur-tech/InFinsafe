@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Globe, Link, Shield, AlertTriangle, CheckCircle, XCircle, ExternalLink } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 
 interface CheckWebsiteProps {
   language: "en" | "hi";
@@ -13,6 +14,7 @@ const CheckWebsite = ({ language }: CheckWebsiteProps) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [results, setResults] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const { toast } = useToast();
 
   const text = {
     en: {
@@ -95,7 +97,39 @@ const CheckWebsite = ({ language }: CheckWebsiteProps) => {
       const result = mockResults[cleanUrl as keyof typeof mockResults];
       setResults(result || null);
       setIsLoading(false);
+      
+      // Show gamification toast if result found
+      if (result) {
+        showGamificationToast();
+      }
     }, 2000);
+  };
+
+  const showGamificationToast = () => {
+    // Simulate points earned and badge unlock
+    const pointsEarned = 15;
+    const currentPoints = 25; // This would come from user state
+    
+    toast({
+      title: language === "en" ? "🎉 Points Earned!" : "🎉 अंक अर्जित!",
+      description: language === "en" 
+        ? `You earned ${pointsEarned} points! Total: ${currentPoints}`
+        : `आपने ${pointsEarned} अंक अर्जित किए! कुल: ${currentPoints}`,
+      duration: 3000,
+    });
+
+    // Check for badge unlock (simplified)
+    if (currentPoints >= 25) {
+      setTimeout(() => {
+        toast({
+          title: language === "en" ? "🏅 New Badge Unlocked!" : "🏅 नया बैज अनलॉक!",
+          description: language === "en" 
+            ? "🔍 Fraud Buster badge unlocked!"
+            : "🔍 धोखाधड़ी बस्टर बैज अनलॉक!",
+          duration: 4000,
+        });
+      }, 1500);
+    }
   };
 
   const getScoreColor = (score: number) => {
