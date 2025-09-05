@@ -6,48 +6,48 @@
 
 @layer base {
   :root {
-    /* Background and text colors */
-    --background: 240 33% 99%;
-    --foreground: 230 55% 9%;
+    /* Background - Light gray for clean, modern feel */
+    --background: 210 20% 98%;
+    --foreground: 220 15% 15%;
 
     /* Card colors */
     --card: 0 0% 100%;
-    --card-foreground: 230 55% 9%;
+    --card-foreground: 220 15% 15%;
 
     /* Popover colors */
     --popover: 0 0% 100%;
-    --popover-foreground: 230 55% 9%;
+    --popover-foreground: 220 15% 15%;
 
-    /* Primary brand colors - Deep blue for trust */
-    --primary: 220 91% 42%;
+    /* Primary brand colors - Professional blue for trust */
+    --primary: 212 95% 45%;
     --primary-foreground: 210 40% 98%;
-    --primary-glow: 220 100% 60%;
+    --primary-glow: 212 95% 60%;
 
-    /* Secondary colors */
-    --secondary: 213 27% 94%;
-    --secondary-foreground: 230 55% 9%;
+    /* Secondary colors - Different shade of blue for hierarchy */
+    --secondary: 208 88% 35%;
+    --secondary-foreground: 210 40% 98%;
 
     /* Muted colors */
-    --muted: 213 27% 94%;
+    --muted: 210 15% 92%;
     --muted-foreground: 215 16% 47%;
 
-    /* Accent colors - Purple for gamification */
-    --accent: 262 83% 58%;
+    /* Accent colors - Professional green for positive feedback */
+    --accent: 140 60% 35%;
     --accent-foreground: 210 40% 98%;
-    --accent-glow: 262 100% 75%;
+    --accent-glow: 140 60% 50%;
 
     /* Status colors */
-    --success: 142 76% 36%;
+    --success: 140 60% 35%;
     --success-foreground: 210 40% 98%;
-    --success-glow: 142 86% 56%;
+    --success-glow: 140 60% 50%;
 
     --warning: 32 95% 44%;
     --warning-foreground: 210 40% 98%;
     --warning-glow: 32 100% 64%;
 
-    --destructive: 0 84% 60%;
+    --destructive: 0 75% 50%;
     --destructive-foreground: 210 40% 98%;
-    --destructive-glow: 0 100% 70%;
+    --destructive-glow: 0 75% 65%;
 
     /* Border and input colors */
     --border: 213 27% 87%;
@@ -92,28 +92,32 @@
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
+    /* Background - Professional blue-gray for trust */
+    --background: 215 20% 8%;
     --foreground: 210 40% 98%;
 
-    --card: 222.2 84% 4.9%;
+    --card: 215 25% 10%;
     --card-foreground: 210 40% 98%;
 
-    --popover: 222.2 84% 4.9%;
+    --popover: 215 25% 10%;
     --popover-foreground: 210 40% 98%;
 
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
+    /* Primary brand colors - Professional blue for trust */
+    --primary: 212 95% 55%;
+    --primary-foreground: 210 40% 98%;
 
-    --secondary: 217.2 32.6% 17.5%;
+    /* Secondary colors - Different shade of blue for hierarchy */
+    --secondary: 208 88% 42%;
     --secondary-foreground: 210 40% 98%;
 
     --muted: 217.2 32.6% 17.5%;
     --muted-foreground: 215 20.2% 65.1%;
 
-    --accent: 217.2 32.6% 17.5%;
+    /* Accent colors - Professional green for positive feedback */
+    --accent: 140 60% 45%;
     --accent-foreground: 210 40% 98%;
 
-    --destructive: 0 62.8% 30.6%;
+    --destructive: 0 75% 55%;
     --destructive-foreground: 210 40% 98%;
 
     --border: 217.2 32.6% 17.5%;
