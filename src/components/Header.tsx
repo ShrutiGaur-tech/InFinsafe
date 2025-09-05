@@ -1,28 +1,7 @@
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Globe, Shield } from "lucide-react";
-
-interface HeaderProps {
-  language: "en" | "hi";
-  onLanguageChange: (lang: "en" | "hi") => void;
-}
-
-const Header = ({ language, onLanguageChange }: HeaderProps) => {
-  const text = {
-    en: {
-      title: "InFinsafe",
-      tagline: "Protect Yourself from Financial Fraud"
-    },
-    hi: {
-      title: "इनफिनसेफ",
-      tagline: "वित्तीय धोखाधड़ी से अपनी सुरक्षा करें"
-    }
-  };
-
-  return (
-   import React, { useState } from "react";
+import React, { useState } from "react";
 import { Shield, Globe } from "lucide-react";
-import { Button } from "../components/ui/button";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 interface HeaderProps {
   text: any;
@@ -62,20 +41,20 @@ const Header: React.FC<HeaderProps> = ({ text, language, onLanguageChange, onSea
 
         {/* Search Bar */}
         <div className="flex flex-1 max-w-md mx-4">
-          <input
+          <Input
             type="text"
             placeholder="Enter name, mobile number, or website"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             onKeyDown={handleKeyDown}
-            className="flex-grow border border-gray-300 rounded-l-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="flex-grow rounded-l-xl border-r-0"
           />
-          <button
+          <Button
             onClick={handleSearch}
-            className="bg-blue-500 text-white px-4 py-2 rounded-r-xl hover:bg-blue-600"
+            className="rounded-l-none rounded-r-xl"
           >
             Search
-          </button>
+          </Button>
         </div>
 
         {/* Language Switcher */}
